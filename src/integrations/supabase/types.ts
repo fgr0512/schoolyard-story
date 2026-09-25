@@ -237,6 +237,59 @@ export type Database = {
           },
         ]
       }
+      equipe: {
+        Row: {
+          ativo: boolean
+          cargo: string | null
+          cpf: string | null
+          created_at: string
+          email: string | null
+          formacao: string | null
+          id: string
+          nome: string
+          telefone: string | null
+          tipo: Database["public"]["Enums"]["staff_type"]
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          ativo?: boolean
+          cargo?: string | null
+          cpf?: string | null
+          created_at?: string
+          email?: string | null
+          formacao?: string | null
+          id?: string
+          nome: string
+          telefone?: string | null
+          tipo: Database["public"]["Enums"]["staff_type"]
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          ativo?: boolean
+          cargo?: string | null
+          cpf?: string | null
+          created_at?: string
+          email?: string | null
+          formacao?: string | null
+          id?: string
+          nome?: string
+          telefone?: string | null
+          tipo?: Database["public"]["Enums"]["staff_type"]
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipe_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       faltas: {
         Row: {
           created_at: string
@@ -567,6 +620,7 @@ export type Database = {
         | "reprovado"
         | "transferido"
         | "concluido"
+      staff_type: "professor" | "funcionario"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -703,6 +757,7 @@ export const Constants = {
         "transferido",
         "concluido",
       ],
+      staff_type: ["professor", "funcionario"],
     },
   },
 } as const
