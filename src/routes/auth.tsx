@@ -40,19 +40,22 @@ function AuthPage() {
       setLoading(false);
       if (error) return toast.error("E-mail ou senha incorretos.");
     }
-    navigate({ to: "/dashboard" });
+    await navigate({ to: "/dashboard" });
+    return undefined;
   }
 
   async function google() {
     const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
     if (result.error) toast.error("Não foi possível entrar com Google.");
-    else if (!result.redirected) navigate({ to: "/dashboard" });
+    else if (!result.redirected) await navigate({ to: "/dashboard" });
+    return undefined;
   }
 
   async function forgot() {
     if (!email) return toast.error("Digite seu e-mail primeiro.");
     const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/reset-password` });
     if (error) toast.error(error.message); else toast.success("Enviamos o link de recuperação por e-mail.");
+    return undefined;
   }
 
   return <main className="min-h-screen bg-background lg:grid lg:grid-cols-[1.05fr_.95fr]">
